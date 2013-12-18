@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>  
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN"   
+"http://www.springframework.org/dtd/spring-beans.dtd">
+	
+<beans>
+	
+	<bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://127.0.0.1:3306/demo" />
+		<property name="username" value="root" />
+		<property name="password" value="root" />
+		<property name="maxWait" value="20" />
+		<property name="maxIdle" value="20" />
+		<property name="maxActive" value="20" />
+		<property name="testOnBorrow" value="true" />
+		<property name="validationQuery" value="select 1" />
+	</bean>
+    
+   <bean id="userDao" class="net.ttny.web.java.test.UserDaoImpl">
+   	<property name="dataSource" ref="dataSource" />
+   </bean>
+    
+   <bean id="login" class="net.ttny.web.java.test.Login">
+     	<property name="userDao" ref="userDao" />
+   </bean>
+
+   <bean id="userinfo" class="net.ttny.web.java.test.UserInfo">
+     	<property name="userDao" ref="userDao" />
+   </bean>
+    
+</beans>
