@@ -43,13 +43,11 @@ public class UserInfo extends ActionSupport {
 	   this.userDao = userDao;
     }
 
-	public String execute() throws Exception {
-      return SUCCESS;
+	public String execute(Object session) throws Exception {
+		if (userDao.userinfo((int)session)) {
+			return SUCCESS;
+		} else {
+			return ERROR;
+		}
     }
-	
-	public int exec1(int userId) throws Exception {
-		System.out.println("??????"+userId);
-		//this.userDao.userinfo(userId);
-		return 0;
-	}
 }

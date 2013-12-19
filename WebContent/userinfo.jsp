@@ -1,26 +1,22 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="net.ttny.web.java.test.UserInfo" %>
 <%@ page import="com.opensymphony.xwork2.ActionContext" %>
-<%@ taglib prefix="s" uri="/struts-tags" %>
 <html>
 <head>
     <title>userinfo</title>
 </head>
 <%
-if (session.getAttribute("USER_INFO")==null) {
+if (session.getAttribute("USER_ID")==null) {
 	response.setStatus(HttpServletResponse.SC_MOVED_PERMANENTLY);
 	response.setHeader("Location","./LoginForm");
 }
 %>
 <body>
 
-<%=session.getAttribute("USER_INFO")%>
+<%=session.getAttribute("USER_ID")%>
 <%
-UserInfo userinfo1 = new UserInfo();
-userinfo1.setUserId(8);
-System.out.println(userinfo1.getUserId());
-userinfo1.exec1((int)userinfo1.getUserId());
-System.out.println(userinfo1.getUsername());
+UserInfo userinfo = new UserInfo();
+userinfo.execute(session.getAttribute("USER_ID"));
 %>
 
 </body>

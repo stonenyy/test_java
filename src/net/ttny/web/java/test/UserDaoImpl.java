@@ -16,13 +16,10 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 
 			String pass = (String)map.get("password");
 			if(passWord.equals(pass)) {
-			
-				UserInfo userinfo = new UserInfo();
-				userinfo.setUserId((int)map.get("idny"));
 				
 				ActionContext actionContext = ActionContext.getContext();
 				Map<String, Object> session = actionContext.getSession();
-				session.put("USER_INFO",userinfo.getUserId());
+				session.put("USER_ID",(int)map.get("idny"));
 				
 				return true;
 			} else {
@@ -34,20 +31,21 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 		}
     }
 	
-	public int userinfo(int userId) {
+	@SuppressWarnings("unchecked")
+	public boolean userinfo(int userId) {
 		String sql = "select * from demo.ny where idny=?";
 		try {
 			Map<String, Object> map = this.getJdbcTemplate().queryForMap(sql, userId);
 			
-			UserInfo userinfo1 = new UserInfo();
-			userinfo1.setUserId((int)map.get("idny"));
-			userinfo1.setUsername((String)map.get("username"));
-			userinfo1.setPassword((String)map.get("password"));
+			ActionContext actionContext = ActionContext.getContext();
+			Map<String, Object> session = actionContext.getSession();
+			session.put("USER_ID",(int)map.get("idny"));
+			session.putAll((Map<? extends String, ? extends Object>) map.put("USER_NAME", (String)map.get("username")));
 			
-			return 0;
+			return true;
 		} catch (EmptyResultDataAccessException e) {
 			e.printStackTrace();
-			return 1;
+			return false;
 		}
 	}
 
