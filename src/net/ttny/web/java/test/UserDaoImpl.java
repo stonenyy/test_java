@@ -31,7 +31,6 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 		}
     }
 	
-	@SuppressWarnings("unchecked")
 	public boolean userinfo(int userId) {
 		String sql = "select * from demo.ny where idny=?";
 		try {
@@ -40,7 +39,7 @@ public class UserDaoImpl extends JdbcDaoSupport implements UserDao {
 			ActionContext actionContext = ActionContext.getContext();
 			Map<String, Object> session = actionContext.getSession();
 			session.put("USER_ID",(int)map.get("idny"));
-			session.putAll((Map<? extends String, ? extends Object>) map.put("USER_NAME", (String)map.get("username")));
+			//session.putAll((Map<? extends String, ? extends Object>) map.put("USER_NAME", (String)map.get("username")));
 			
 			return true;
 		} catch (EmptyResultDataAccessException e) {
